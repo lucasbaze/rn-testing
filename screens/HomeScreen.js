@@ -1,6 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, { useState } from 'react';
 import {
+    Alert,
     Image,
     Platform,
     ScrollView,
@@ -9,11 +10,12 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-
+import { useStateValue } from '../state';
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
     const [funny, setFunny] = useState('Laugh Bitch');
+    const [{ nothing, hello }, dispatch] = useStateValue();
 
     return (
         <View style={styles.container}>
@@ -47,11 +49,17 @@ export default function HomeScreen() {
                     >
                         <MonoText>screens/HomeScreen.js</MonoText>
                     </View>
-
-                    <Text style={styles.getStartedText}>
-                        Change this text and your app will automatically reload.{' '}
-                        {funny}
-                    </Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            Alert.alert('Hello!');
+                            dispatch({ type: 'show_hello' });
+                        }}
+                    >
+                        <Text style={styles.getStartedText}>
+                            Change this text and your app will automatically
+                            reload. {nothing} {hello}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.helpContainer}>
